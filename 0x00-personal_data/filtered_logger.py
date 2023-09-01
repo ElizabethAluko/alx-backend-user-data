@@ -5,18 +5,20 @@ import os
 import mysql.connector
 import re
 import logging
+from typing import List
+
 
 PII_FIELDS = ("name", "email", "phone", "password", "ssn")
 
 
-def filter_datum(fields: list[str], redaction: str,
+def filter_datum(fields: List[str], redaction: str,
                  message: str, separator: str) -> str:
     """
     Filters specified fields in a message and replaces their
     values with redaction.
 
     Args:
-        fields (list[str]): List of field names to be filtered.
+        fields (List[str]): List of field names to be filtered.
         redaction (str): The value to replace filtered fields with.
         message (str): The log message to filter.
         separator (str): The character used to separate fields
@@ -39,7 +41,7 @@ class RedactingFormatter(logging.Formatter):
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
     SEPARATOR = ";"
 
-    def __init__(self, fields: list[str]):
+    def __init__(self, fields: List[str]):
         """
         Initializes a RedactingFormatter instance.
 
