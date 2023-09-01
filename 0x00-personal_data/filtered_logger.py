@@ -92,8 +92,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     variables.
 
     Returns:
-        Optional[mysql.connector.connection.MySQLConnection]:
-        A database connection or None if the connection fails.
+        mysql.connector.connection.MySQLConnection: A database connection
     """
     username = os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
     password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
@@ -107,3 +106,77 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=db_name
     )
     return connection
+
+
+import logging
+import mysql.connector
+import os
+
+def get_db():
+    """
+    Establishes a connection to the MySQL database using environment variables.
+
+    Returns:
+        mysql.connector.connection.MySQLConnection: A database connection.
+    """
+    username = os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
+
+    connection = mysql.connector.connect(
+        user=username,
+        password=password,
+        host=host,
+        database=db_name
+    )
+
+    return connection
+
+
+def main():
+    """Return redacted loggings of database table"""
+    logging.basicConfig(
+        level=logging.INFO,
+        format="[HOLBERTON] user_data INFO %(asctime)-15s: %(message)s"
+    )
+
+    db_connection = get_db()
+
+    cursor = db_connection.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM users")
+
+    formatter = logging.Formatter("[HOLBERTON] user_data INFO %(asctime)-15s: %(message)s")
+
+    redacted_fields = ["name", "email", "phone", "ssn", "password"]
+
+    for row in cursor.fetchall():
+        redacted_row = {key: "***" if key in redacted_fields else value for key, value in row.items()}
+        log_message = '; '.join(
+                [f'{key}={value}' for key, value in redacted_row.items()])
+
+        record = logging.LogRecord(
+            name="user_data",
+            level=logging.INFO,
+            pathname="",
+            lineno=0,
+            msg=log_message,
+            args=None,
+            exc_info=None
+        )
+        record.asctime = row['last_login'].strftime("%Y-%m-%dT%H:%M:%S")
+        record.user_agent = row['user_agent']
+
+        handler = logging.StreamHandler()
+        handler.setFormatter(formatter)
+
+        logger = logging.getLogger("user_data")
+        logger.addHandler(handler)
+        logger.propagate = False
+
+        logger.info("")
+
+    db_connection.close()
+
+if __name__ == "__main__":
+    main()
