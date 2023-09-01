@@ -69,6 +69,7 @@ class RedactingFormatter(logging.Formatter):
 
 
 def get_logger() -> logging.Logger:
+    """Get the logger of a given user_data"""
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
 
@@ -86,6 +87,7 @@ def get_logger() -> logging.Logger:
 
 
 def get_db():
+    """Get the database using environment variables"""
     username = os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
     password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
     host = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
