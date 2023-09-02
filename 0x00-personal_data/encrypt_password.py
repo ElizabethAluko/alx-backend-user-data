@@ -27,9 +27,9 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
             True: if the password matches
             False: if the passwoed does not match
     """
-    password = hash_password(password)
+    password = password.encode('utf-8')
 
-    if password == hash_password:
+    if bcrypt.checkpsw(password, hash_password):
         return True
     else:
         return False
