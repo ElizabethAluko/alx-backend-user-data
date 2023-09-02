@@ -120,12 +120,15 @@ def main():
     cursor = db_connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users")
 
-    formatter = logging.Formatter("[HOLBERTON] user_data INFO %(asctime)-15s: %(message)s")
+    formatter = logging.Formatter(
+            "[HOLBERTON] user_data INFO %(asctime)-15s: %(message)s")
 
     redacted_fields = ["name", "email", "phone", "ssn", "password"]
 
     for row in cursor.fetchall():
-        redacted_row = {key: "***" if key in redacted_fields else value for key, value in row.items()}
+        redacted_row = {
+                key: "***" if key in redacted_fields
+                else value for key, value in row.items()}
         log_message = '; '.join(
                 [f'{key}={value}' for key, value in redacted_row.items()])
 
@@ -151,6 +154,7 @@ def main():
         logger.info("")
 
     db_connection.close()
+
 
 if __name__ == "__main__":
     main()
