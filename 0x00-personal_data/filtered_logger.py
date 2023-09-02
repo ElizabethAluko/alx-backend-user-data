@@ -108,32 +108,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return connection
 
 
-import logging
-import mysql.connector
-import os
-
-def get_db():
-    """
-    Establishes a connection to the MySQL database using environment variables.
-
-    Returns:
-        mysql.connector.connection.MySQLConnection: A database connection.
-    """
-    username = os.environ.get('PERSONAL_DATA_DB_USERNAME', 'root')
-    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', '')
-    host = os.environ.get('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name = os.environ.get('PERSONAL_DATA_DB_NAME')
-
-    connection = mysql.connector.connect(
-        user=username,
-        password=password,
-        host=host,
-        database=db_name
-    )
-
-    return connection
-
-
 def main():
     """Return redacted loggings of database table"""
     logging.basicConfig(
