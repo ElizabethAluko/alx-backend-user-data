@@ -30,6 +30,15 @@ def stats() -> str:
 def unauthorized_endpoint() -> str:
     """ GET /api/v1/unauthorized
     Return:
-      - the error codw 401 json
+      - the error code 401 json
     """
     abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> str:
+    """GET /api/v1/forbidden/
+    Return:
+        - the error code 403 json
+    """
+    abort(403)
