@@ -40,9 +40,24 @@ class Auth:
 
     def authorization_header(self, request=None) -> str:
         """
-        Placeholder method for authorization_header.
+        Validates the request and returns the value of the
+        Authorization header if present.
+
+        If request is None, returns None.
+        If request doesn’t contain the header key Authorization,
+        returns None.
+        Otherwise, return the value of the header request Authorization.
+
+        Args:
+            request (Request): The Flask request object.
+
+        Returns:
+            str or None: The value of the Authorization header or
+            None if not present.
         """
-        return None
+        if request is None or 'Authorization' not in request.headers:
+            return None
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
