@@ -6,6 +6,8 @@ from flask import request
 
 
 class Auth:
+    """Authentification class"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
         """
         Placeholder method for require_auth.
