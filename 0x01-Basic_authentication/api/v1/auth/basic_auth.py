@@ -12,8 +12,8 @@ class BasicAuth(Auth):
                                             ) -> str:
         """Returns the base64 string of the authentication header"""
 
-        if not authorization_header or
-        not instanceof(authorization_header, str):
+        if not authorization_header or not instanceof(
+                authorization_header, str):
             return None
         authorization_header = authorization_header.split()
         if len(authorization_header) != 3 or
