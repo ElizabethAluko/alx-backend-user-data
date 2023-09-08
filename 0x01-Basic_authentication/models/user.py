@@ -69,8 +69,9 @@ class User(Base):
         :return: A list of User instances that match the criteria.
         """
         matching_users = []
+        # Replace with your actual data source (e.g., database)
         cls.user_data = [None]
-        for user in cls.user_data:  # Replace with your actual data source (e.g., database)
+        for user in cls.user_data:
             match = True
 
             for key, value in criteria.items():
