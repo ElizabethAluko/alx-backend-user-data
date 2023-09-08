@@ -38,13 +38,6 @@ class Auth:
                 return False
 
         return True
-        """
-        # Ensure path ends with a slash.
-        if not path.endswith('/'):
-            path += '/'
-
-        # Check if path is in excluded_paths (slash tolerant).
-        return not any(path.startswith(ex_path) for ex_path in excluded_paths)"""
 
     def authorization_header(self, request=None) -> str:
         """
