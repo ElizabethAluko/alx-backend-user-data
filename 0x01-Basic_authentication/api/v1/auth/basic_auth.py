@@ -2,7 +2,9 @@
 """Basic Authentication Module"""
 
 from api.v1.auth.auth import Auth
+from models.user import User
 import base64
+from typing import TypeVar
 
 
 class BasicAuth(Auth):
@@ -71,7 +73,7 @@ class BasicAuth(Auth):
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
         # Search for users with the given email in the database
-        users_with_email = User.search(user_email)
+        users_with_email = User.search({'email': user_email})
 
         # Check if there are users with the provided email
         if not users_with_email:

@@ -3,6 +3,7 @@
 """
 import hashlib
 from models.base import Base
+from typing import List, TypeVar
 
 
 class User(Base):
@@ -57,3 +58,28 @@ class User(Base):
             return "{}".format(self.last_name)
         else:
             return "{} {}".format(self.first_name, self.last_name)
+
+    @classmethod
+    def search(cls, criteria: dict) -> List[TypeVar('User')]:
+        """
+        Search for users based on specific criteria.
+
+        :param criteria: A dictionary containing search criteria.
+        Example: {'email': 'example@email.com', 'role': 'admin'}
+        :return: A list of User instances that match the criteria.
+        """
+        matching_users = []
+        cls.user_data = [None]
+        for user in cls.user_data:  # Replace with your actual data source (e.g., database)
+            match = True
+
+            for key, value in criteria.items():
+                if getattr(user, key, None) != value:
+                    match = False
+                    break
+
+            if match:
+                matching_users.append(user)
+
+        return matching_users
+
