@@ -83,11 +83,11 @@ class BasicAuth(Auth):
         # Iterate through users with the given email
         for user in users_with_email:
             # Check if the provided password is valid for this user
-            if user.is_valid_password(user_pwd):
-                return user
+            if not user.is_valid_password(user_pwd):
+                return None
 
         # If no matching user with the provided password, return None
-        return None
+        return user
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
@@ -100,7 +100,7 @@ class BasicAuth(Auth):
         if request is None:
             return None
 
-        authorization_header = self.authorization_header(request)
+        authorization_header = super().authorization_header(request)
 
         if authorization_header is None:
             return None
