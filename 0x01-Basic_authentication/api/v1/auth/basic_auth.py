@@ -2,7 +2,7 @@
 """Basic Authentication Module"""
 
 from api.v1.auth.auth import Auth
-from models.user import User
+import models.user
 import base64
 from typing import TypeVar
 
@@ -73,20 +73,16 @@ class BasicAuth(Auth):
         if user_pwd is None or not isinstance(user_pwd, str):
             return None
         # Search for users with the given email in the database
-        users_with_email = User.search({'Email': user_email})
 
-        # Check if there are users with the provided email
-        if not users_with_email:
+        users = models.user.User.search({"email": user_email})
+        if not users:
             return None
 
-        # Iterate through users with the given email
-        for user in users_with_email:
-            # Check if the provided password is valid for this user
-            if user.is_valid_password(user_pwd):
-                return user
+        user = users[0]
+        if not user.is_valid_password(user_pwd):
+            return None
 
-        # If no matching user with the provided password, return None
-        return None
+        return user
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
@@ -99,7 +95,7 @@ class BasicAuth(Auth):
         if request is None:
             return None
 
-        authorization_header = self.authorization_header(request)
+        authorization_header = super().authorization_header(request)
 
         if authorization_header is None:
             return None

@@ -42,7 +42,7 @@ def before_request():
     if request.path not in excluded_paths:
         if auth.require_auth(request.path, excluded_paths):
             authorization_header = auth.authorization_header(request)
-            current_user = auth.current_user(request)
+            request.current_user = auth.current_user(request)
 
             if authorization_header is None:
                 # Unauthorized (401)
