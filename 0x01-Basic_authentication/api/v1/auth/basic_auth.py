@@ -75,7 +75,7 @@ class BasicAuth(Auth):
         # Search for users with the given email in the database
 
         users = models.user.User.search({"email": user_email})
-        if not users:
+        if not users or users is None:
             return None
 
         for user in users:
