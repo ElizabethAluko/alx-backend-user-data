@@ -4,6 +4,7 @@
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from models.user import User
+from api.v1.auth.basic_auth import BasicAuth
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -27,6 +28,7 @@ def view_one_user(user_id: str = None) -> str:
     """
     if user_id is None:
         abort(404)
+    current_user = BasicAuth.current_user()
     if user_id == 'me' and request.current_user == None:
         abort(404)
     if user_id == 'me' and request.current_user != None:
