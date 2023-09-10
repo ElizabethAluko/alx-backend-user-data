@@ -100,7 +100,7 @@ class BasicAuth(Auth):
         if request is None:
             return None
 
-        authorization_header = super().authorization_header(request)
+        authorization_header = authorization_header(request)
 
         if authorization_header is None:
             return None
