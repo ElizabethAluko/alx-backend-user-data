@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Password Hashing Module"""
+import bcrypt
 
-
-def _hash_password(self, password: str) -> bytes:
+def _hash_password(password: str) -> bytes:
     """Hash Password"""
     salt = bcrypt.gensalt()
 
