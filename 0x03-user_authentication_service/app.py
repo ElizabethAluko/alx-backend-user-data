@@ -28,10 +28,10 @@ def users():
         # If successful, respond with the following json payload.
         response_data = {"email": email, "message": "user created"}
         return jsonify(response_data), 200
-    except ValueError as e:
+    except ValueError:
         # Catch the exception for duplicate email
-        error_message = str(e)
-        response_data = {"message": error_message}
+        # error_message = str(e)
+        response_data = {"message": "email already registered"}
         return jsonify(response_data), 400
 
 
