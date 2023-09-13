@@ -10,12 +10,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """Index Page"""
     payload = {"message": "Bienvenue"}
     return jsonify(payload)
 
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
+    """Register a new user"""
     try:
         email = request.form.get('email')
         password = request.form.get('password')
