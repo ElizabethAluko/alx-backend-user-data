@@ -8,9 +8,6 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 from user import Base, User
-import logging
-
-logging.basicConfig(level=logging.ERROR)
 
 
 class DB:
@@ -20,7 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -44,13 +41,10 @@ class DB:
         Returns:
             User: The User object that was added to the database.
         """
-        new_user = User()
-        new_user.email = email
-        new_user.hashed_password = hashed_password
-        self._session.add(new_user)
+        user = User(email=email, hashed_password=hashed_password)
+        self._session.add(user)
         self._session.commit()
-
-        return new_user
+        return user
 
     def find_user_by(self, **kwargs):
         """Find and return the first user in the users table based
