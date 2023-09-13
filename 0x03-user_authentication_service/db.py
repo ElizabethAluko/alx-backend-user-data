@@ -46,7 +46,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """Find and return the first user in the users table based
         on input arguments.
 
@@ -67,4 +67,34 @@ class DB:
                 raise NoResultFound()
             return user
         except InvalidRequestError as e:
+            raise e
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """Update an existing user data.
+
+        Args:
+            user_id (int): The id of the user to be updated.
+            **kwargs: Arbitrary keyword arguments for filtering.
+
+        Returns:
+            None
+        """
+
+        try:
+            # Search, if there is a user with the id user_id
+            user = self.find_user_by(id=user_id)
+
+            # Update the user if the user exists.
+            for key, value in kwargs.items():
+                if hasattr(user, key):
+                    setattr(user, key, value)
+                else:
+                    raise ValueError
+
+            # Commit changes to the database
+            self._session.commit()
+
+            return None
+
+        except NoResultFound as e:
             raise e
