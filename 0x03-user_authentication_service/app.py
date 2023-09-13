@@ -15,7 +15,7 @@ def index():
     return jsonify(payload)
 
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users', methods=['POST'])
 def users():
     """Register a new user"""
     try:
@@ -30,7 +30,6 @@ def users():
         return jsonify(response_data), 200
     except ValueError:
         # Catch the exception for duplicate email
-        # error_message = str(e)
         response_data = {"message": "email already registered"}
         return jsonify(response_data), 400
 
