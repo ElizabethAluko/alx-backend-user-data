@@ -46,15 +46,17 @@ class Auth:
                                      hashed_password=hashed_password)
             return user
 
-    def valid_login(self, email: str, password:str) -> bool:
+    def valid_login(self, email: str, password: str) -> bool:
         """Credentials validation"""
+
         try:
             # Try to find the user by email
-            self._db.find_user_by(email=email)
+            user = self._db.find_user_by(email=email)
 
             # Check if the provided password match the stoted hashed password
-            if bcrypt.checkpw(password.encode('utf-8'),
-                              user.hashed_password.encode('utf-8')):
+            password = password.encode('utf-8')
+            if bcrypt.checkpw(password,
+                              user.hashed_password):
                 return True
 
         except NoResultFound:
