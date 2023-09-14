@@ -54,5 +54,26 @@ def login():
         return response
 
 
+@app.route('/sessions', methods=['DELETE'])
+def logout():
+    """Delete stored session_id to logout the user"""
+    if requst.method == 'DELETE':
+        session_id = request.cookies.get('session_id')
+
+    try:
+        # Find the user with the session id.
+        user = AUTH.find_user_by_session_id(session_id)
+
+        # Destoy the session_id
+        AUTH.destroy_session(session_id)
+
+        # Redirect to GET /
+        redirect('/')
+
+    except NoResultFound:
+        # If the user does not exist
+        abort(403)
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
