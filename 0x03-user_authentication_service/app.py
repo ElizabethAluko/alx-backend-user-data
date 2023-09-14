@@ -63,16 +63,31 @@ def logout():
 
     try:
         # Find the user with the session id.
-        user = AUTH.get_user_from_session_id(session_id=session_id)
+        user = AUTH.get_user_from_session_id(session_id)
 
         # Destoy the session_id
-        AUTH.destroy_session(session_id)
+        AUTH.destroy_session(user.user_id)
 
         # Redirect to GET /
         return redirect('/')
 
-    except NoResultFound:
+    except ValueError:
         # If the user does not exist
+        abort(403)
+
+
+@app.route('/profile', methods=['GET'])
+def profile():
+    """Send the user profile kn GET request"""
+    if request.method == 'GET':
+        session_id = request.cookies.get('session_id')
+
+    user = AUTH.get_user_from_session_id(session_id)
+    
+    if user:
+        return jsonify({"email": user.email}), 200
+
+    else:
         abort(403)
 
 
