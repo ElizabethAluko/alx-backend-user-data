@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Application Module"""
 
-from flask import Flask, jsonify, request, abort, make_response, url_redirect
+from flask import Flask, jsonify, request, abort, make_response, redirect
 from auth import Auth
 
 AUTH = Auth()
@@ -69,7 +69,7 @@ def logout():
         AUTH.destroy_session(session_id)
 
         # Redirect to GET /
-        url_redirect('/')
+        return redirect('/')
 
     else:
         # except NoResultFound:
