@@ -89,6 +89,8 @@ def profile():
 
         else:
             return 403
+    else:
+        return 403
 
 
 if __name__ == "__main__":
