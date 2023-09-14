@@ -6,6 +6,7 @@ from user import User
 from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy.exc import InvalidRequestError
 import uuid
+from typing import Optional
 
 
 def _hash_password(password: str) -> bytes:
@@ -83,6 +84,18 @@ class Auth:
             self._db.update_user(user.id, session_id=session_id)
 
             return session_id
+
+        except NoResultFound:
+            return None
+
+    def get_user_from_session_id(self, session_id: str) -> Optional[User]:
+        """Retrieve a user data from its session id"""
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+            if user:
+                return user
+            else:
+                return None
 
         except NoResultFound:
             return None
