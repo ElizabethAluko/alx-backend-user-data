@@ -59,7 +59,7 @@ def logout():
     """Delete stored session_id to logout the user"""
 
     if request.method == 'DELETE':
-        session_id = request.cookie.get('session_id')
+        session_id = request.cookies.get('session_id')
 
     # Find the user with the session id.
     user = AUTH.get_user_from_session_id(session_id=session_id)
