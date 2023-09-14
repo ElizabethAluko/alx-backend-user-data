@@ -60,17 +60,18 @@ def logout():
     if requst.method == 'DELETE':
         session_id = request.cookies.get('session_id')
 
-    try:
-        # Find the user with the session id.
-        user = AUTH.find_user_by_session_id(session_id)
+    # Find the user with the session id.
+    user = AUTH.find_user_by_session_id(session_id)
 
+    if user:
         # Destoy the session_id
         AUTH.destroy_session(session_id)
 
         # Redirect to GET /
         redirect('/')
 
-    except NoResultFound:
+    else:
+        # except NoResultFound:
         # If the user does not exist
         abort(403)
 
