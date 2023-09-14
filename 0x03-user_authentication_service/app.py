@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Application Module"""
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort, make_response
 from auth import Auth
 
 AUTH = Auth()
@@ -32,6 +32,26 @@ def users():
         # Catch the exception for duplicate email
         response_data = {"message": "email already registered"}
         return jsonify(response_data), 400
+
+
+@app.route('/sessions', methods=['POST'])
+def login():
+    """Login function"""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # Check if login information is correct
+        if not AUTH.valid_login(email, password):
+            abort(401)   # Unauthorized
+
+        # If login is correct, create a new session and store it as cookie.
+        session_id = AUTH.create_session(email)
+        response = make_response(jsonify({"email": email,
+                                          "message": "logged in"}))
+        response.set_cookie("session_id", session_id)
+
+        return response
 
 
 if __name__ == "__main__":
