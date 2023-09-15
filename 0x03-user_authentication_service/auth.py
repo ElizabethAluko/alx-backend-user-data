@@ -68,7 +68,7 @@ class Auth:
 
     def _generate_uuid(self) -> str:
         """Generate a new uuid and return it as a string"""
-        return str(uuid.uuid4()).replace('-', '')
+        return str(uuid.uuid4())
 
     def create_session(self, email: str) -> str:
         """Create a session id for a user with the given email"""
