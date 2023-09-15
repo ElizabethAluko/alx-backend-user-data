@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Application Module"""
 
-from flask import Flask, jsonify, request, abort, make_response, redirect
+from flask import Flask, jsonify, request, abort, url_for, redirect
 from auth import Auth
 
 AUTH = Auth()
@@ -70,7 +70,7 @@ def logout():
     AUTH.destroy_session(user.user_id)
 
     # Redirect to GET /
-    return redirect('/')
+    return redirect(url_for('index'))
 
 
 @app.route('/profile', methods=['GET'])
