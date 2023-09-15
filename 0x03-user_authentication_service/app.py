@@ -87,10 +87,8 @@ def profile():
         if user:
             return jsonify({"email": user.email}), 200
 
-        else:
+        elif not user or not session_id:
             return 403
-    else:
-        return 403
 
 
 if __name__ == "__main__":
