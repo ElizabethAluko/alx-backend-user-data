@@ -70,7 +70,7 @@ def logout():
         return make_response(redirect('/'))
 
     else:
-        return 403
+        return "Forbidden", 403
 
 
 @app.route('/profile', methods=['GET'])
