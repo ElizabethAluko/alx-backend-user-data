@@ -117,3 +117,12 @@ class Auth:
         self._db.update_user(user.id, reset_token=reset_token)
 
         return reset_token
+
+    def update_password(self, reset_token: str, password:str) -> None:
+        """Update the new password for the user"""
+        user = self._db.find_user_by(reset_token=reset_token)
+        if not user:
+            raise ValueError('User does not exist')
+        hashed_password = _hash_password(password)
+        self._db.update_user(user.id, hashed_password = hashed_password,
+                             reset_token = None)
