@@ -57,10 +57,9 @@ def login():
 @app.route('/sessions', methods=['DELETE'])
 def logout():
     """Delete stored session_id to logout the user"""
+    session_id = request.cookies.get('session_id')
 
-    if request.method == 'DELETE':
-        session_id = request.cookies.get('session_id')
-
+    if session_id and isinstance(session_id, str):
         # Find the user with the session id.
         user = AUTH.get_user_from_session_id(session_id)
 
