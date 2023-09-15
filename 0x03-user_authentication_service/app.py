@@ -96,7 +96,7 @@ def get_reset_password_token():
         reset_password_token = AUTH.get_reset_password_token(email)
 
         if not reset_password_token:
-            abort(403)
+            return "Forbidden", 403
         else:
             response = jsonify({"email": "<user email>",
                                 "reset_token": reset_password_token})
