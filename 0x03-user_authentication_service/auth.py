@@ -17,6 +17,11 @@ def _hash_password(password: str) -> bytes:
     return hashed_password
 
 
+def _generate_uuid(self) -> str:
+    """Generate a new uuid and return it as a string"""
+    return str(uuid.uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -66,10 +71,6 @@ class Auth:
 
         return False
 
-    def _generate_uuid(self) -> str:
-        """Generate a new uuid and return it as a string"""
-        return str(uuid.uuid4())
-
     def create_session(self, email: str) -> str:
         """Create a session id for a user with the given email"""
 
@@ -78,7 +79,7 @@ class Auth:
             user = self._db.find_user_by(email=email)
 
             # Generate a new session ID using the _generate_uuid method
-            session_id = self._generate_uuid()
+            session_id = _generate_uuid()
 
             # Update the user's session_id in the database
             self._db.update_user(user.id, session_id=session_id)
@@ -112,7 +113,7 @@ class Auth:
         if not user:
             raise ValueError("User does not exist")
 
-        reset_token = self._generate_uuid()
+        reset_token = _generate_uuid()
         self._db.update_user(user.id, reset_token=reset_token)
 
         return reset_token
