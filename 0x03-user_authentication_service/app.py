@@ -91,5 +91,19 @@ def profile():
             return 403
 
 
+@app.route('/reset_password', methods=['POST'])
+def get_reset_password_token():
+    """To reset the user password"""
+    if request.method == 'POST':
+        email = request.form.get('email')
+        reset_password_token = AUTH.get_reset_password_token(email)
+        if not reset_password_token:
+            return 403
+        else:
+            response = jsonify({"email": "<user email>",
+                                "reset_token": reset_password_token})
+            return response, 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port="5000")
