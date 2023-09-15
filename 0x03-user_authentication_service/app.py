@@ -85,7 +85,7 @@ def profile():
             return jsonify({"email": user.email}), 200
 
         elif not user or not session_id:
-            abort(403)
+            return "Forbidden", 403
 
 
 @app.route('/reset_password', methods=['POST'])
