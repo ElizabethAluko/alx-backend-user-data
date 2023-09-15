@@ -61,15 +61,15 @@ def logout():
 
     # Find the user with the session id.
     user = AUTH.get_user_from_session_id(session_id)
-        if user:
-            # Destoy the session_id
-            AUTH.destroy_session(user.user_id)
+    if user:
+        # Destoy the session_id
+        AUTH.destroy_session(user.user_id)
 
-            # Redirect to GET /
-            return redirect('/')
+        # Redirect to GET /
+        return redirect('/')
 
-        else:
-            abort(403)
+    else:
+        abort(403)
 
 
 @app.route('/profile', methods=['GET'])
