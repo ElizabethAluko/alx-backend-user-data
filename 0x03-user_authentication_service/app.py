@@ -84,7 +84,7 @@ def profile():
         if user:
             return jsonify({"email": user.email}), 200
 
-        elif not user or not session_id:
+        elif not user or session_id == '':
             return "Forbidden", 403
 
 
