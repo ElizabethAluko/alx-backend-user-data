@@ -88,7 +88,7 @@ def profile():
             return jsonify({"email": user.email}), 200
 
         elif not user or not session_id:
-            return 403
+            abort(403)
 
 
 @app.route('/reset_password', methods=['POST'])
@@ -98,7 +98,7 @@ def get_reset_password_token():
         email = request.form.get('email')
         reset_password_token = AUTH.get_reset_password_token(email)
         if not reset_password_token:
-            return 403
+            abort(403)
         else:
             response = jsonify({"email": "<user email>",
                                 "reset_token": reset_password_token})
