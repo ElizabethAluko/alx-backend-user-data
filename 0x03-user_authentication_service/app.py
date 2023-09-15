@@ -95,7 +95,7 @@ def get_reset_password_token():
         email = request.form.get('email')
         reset_password_token = AUTH.get_reset_password_token(email)
 
-        if not reset_password_token or reset_password_token == None:
+        if not reset_password_token or reset_password_token is None:
             return "Forbidden", 403
         else:
             response = jsonify({"email": "<user email>",
