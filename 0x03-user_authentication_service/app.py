@@ -70,7 +70,7 @@ def logout():
     AUTH.destroy_session(user.user_id)
 
     # Redirect to GET /
-    return redirect(url_for('home'))
+    return redirect(url_for('/'))
 
 
 @app.route('/profile', methods=['GET'])
