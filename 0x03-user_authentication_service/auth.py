@@ -107,6 +107,7 @@ class Auth:
 
     def get_reset_password_token(self, email: str) -> str:
         """Get a password reset token of a user with the given email"""
+
         try:
             user = self._db.find_user_by(email=email)
             if user:
