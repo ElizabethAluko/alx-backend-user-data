@@ -19,7 +19,7 @@ def _hash_password(password: str) -> bytes:
 
 def _generate_uuid(self) -> str:
     """Generate a new uuid and return it as a string"""
-    return str(uuid.uuid4())
+    return str(uuid.uuid4()).replace('-', '')
 
 
 class Auth:
