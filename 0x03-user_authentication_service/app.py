@@ -58,18 +58,19 @@ def login():
 def logout():
     """Delete stored session_id to logout the user"""
     session_id = request.cookies.get('session_id')
+    if not session_id:
+        abort(403)
 
     # Find the user with the session id.
     user = AUTH.get_user_from_session_id(session_id)
-    if user:
-        # Destoy the session_id
-        AUTH.destroy_session(user.user_id)
-
-        # Redirect to GET /
-        return redirect('/'), 302
-
-    else:
+    if not user:
         abort(403)
+
+    # User is found, destoy the session_id
+    AUTH.destroy_session(user.user_id)
+
+    # Redirect to GET /
+    return redirect('/')
 
 
 @app.route('/profile', methods=['GET'])
