@@ -94,9 +94,8 @@ def get_reset_password_token():
     if request.method == 'POST':
         email = request.form.get('email')
         reset_password_token = AUTH.get_reset_password_token(email)
-        if reset_password == None:
-            return "user doest not exist"
-        elif not reset_password_token:
+
+        if not reset_password_token:
             abort(403)
         else:
             response = jsonify({"email": "<user email>",
