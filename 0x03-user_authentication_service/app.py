@@ -67,7 +67,7 @@ def logout():
         AUTH.destroy_session(user.user_id)
 
         # Redirect to GET /
-        return make_response(redirect('/'))
+        return make_response(redirect('/')), 302
 
     else:
         return "Forbidden", 403
