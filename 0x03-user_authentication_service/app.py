@@ -63,17 +63,18 @@ def logout():
         abort(403)
 
     # Find the user with the session id.
-    user = AUTH.get_user_from_session_id(session_id)
-    if not user:
+    try:
+        user = AUTH.get_user_from_session_id(session_id)
+
+        # User is found, destoy the session_id
+        AUTH.destroy_session(user.user_id)
+
+        # Redirect to GET /
+        response = make_response(redirect('/'))
+        # response.status_code = 302
+        return response, 302
+    except ValueError:
         abort(403)
-
-    # User is found, destoy the session_id
-    AUTH.destroy_session(user.user_id)
-
-    # Redirect to GET /
-    response = make_response(redirect(url_for('home')))
-    # response.status_code = 302
-    return response
 
 
 @app.route('/profile', methods=['GET'])
