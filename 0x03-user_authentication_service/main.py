@@ -1,8 +1,12 @@
+#!/usr/bin/env python3
+"""Test Module"""
+
 import requests
 from typing import Optional
 
 # Replace with your actual server base URL
 BASE_URL = "http://your_server_base_url_here"
+
 
 def register_user(email: str, password: str) -> None:
     """
