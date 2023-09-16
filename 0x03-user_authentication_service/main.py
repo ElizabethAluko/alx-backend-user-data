@@ -24,6 +24,7 @@ def register_user(email: str, password: str) -> None:
     response = requests.post(url, data=data)
     assert response.status_code == 200, "Registration failed."
 
+
 def log_in_wrong_password(email: str, password: str) -> None:
     """
     Attempt to log in with an incorrect password.
@@ -38,7 +39,9 @@ def log_in_wrong_password(email: str, password: str) -> None:
     url = f"{BASE_URL}/login"
     data = {"email": email, "password": password}
     response = requests.post(url, data=data)
-    assert response.status_code == 401, "Expected 401 Unauthorized status code."
+    assert response.status_code == 401,
+    "Expected 401 Unauthorized status code."
+
 
 def log_in(email: str, password: str) -> str:
     """
@@ -52,7 +55,8 @@ def log_in(email: str, password: str) -> str:
         str: The session ID.
 
     Raises:
-        AssertionError: If login fails (status code is not 200) or session ID is missing.
+        AssertionError: If login fails (status code is not 200)
+        or session ID is missing.
     """
     url = f"{BASE_URL}/login"
     data = {"email": email, "password": password}
@@ -61,6 +65,7 @@ def log_in(email: str, password: str) -> str:
     session_id = response.json().get("session_id")
     assert session_id is not None, "Session ID not found in response."
     return session_id
+
 
 def profile_unlogged() -> None:
     """
@@ -72,6 +77,7 @@ def profile_unlogged() -> None:
     url = f"{BASE_URL}/profile"
     response = requests.get(url)
     assert response.status_code == 403, "Expected 403 Forbidden status code."
+
 
 def profile_logged(session_id: str) -> None:
     """
@@ -88,6 +94,7 @@ def profile_logged(session_id: str) -> None:
     response = requests.get(url, cookies=cookies)
     assert response.status_code == 200, "Profile access failed."
 
+
 def log_out(session_id: str) -> None:
     """
     Log out the user.
@@ -103,6 +110,7 @@ def log_out(session_id: str) -> None:
     response = requests.delete(url, cookies=cookies)
     assert response.status_code == 302, "Expected 302 Redirect status code."
 
+
 def reset_password_token(email: str) -> str:
     """
     Request a reset password token.
@@ -114,7 +122,8 @@ def reset_password_token(email: str) -> str:
         str: The reset password token.
 
     Raises:
-        AssertionError: If the request for a reset token fails (status code is not 200) or token is missing.
+        AssertionError: If the request for a reset token fails
+        (status code is not 200) or token is missing.
     """
     url = f"{BASE_URL}/reset_password"
     data = {"email": email}
@@ -123,6 +132,7 @@ def reset_password_token(email: str) -> str:
     reset_token = response.json().get("reset_token")
     assert reset_token is not None, "Reset token not found in response."
     return reset_token
+
 
 def update_password(email: str, reset_token: str, new_password: str) -> None:
     """
@@ -134,12 +144,15 @@ def update_password(email: str, reset_token: str, new_password: str) -> None:
         new_password (str): The new password to set.
 
     Raises:
-        AssertionError: If password update fails (status code is not 200).
+        AssertionError: If password update fails (status code
+        is not 200).
     """
     url = f"{BASE_URL}/update_password"
-    data = {"email": email, "reset_token": reset_token, "new_password": new_password}
+    data = {"email": email, "reset_token": reset_token,
+            "new_password": new_password}
     response = requests.put(url, data=data)
     assert response.status_code == 200, "Password update failed."
+
 
 if __name__ == "__main__":
     EMAIL = "guillaume@holberton.io"
