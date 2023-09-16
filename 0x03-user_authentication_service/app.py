@@ -123,8 +123,8 @@ def update_password():
     if not reset_token or not email:
         abort(403)
     AUTH.update_password(reset_token, new_password)
-    response = jsonify({"email": email,
-                        "message": "Password updated"})
+    response = make_response(jsonify({"email": email,
+                                      "message": "Password updated"}))
     return response, 200
 
 
