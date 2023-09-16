@@ -72,7 +72,7 @@ def logout():
 
     # Redirect to GET /
     response = make_response(redirect('/'))
-    response.status_code = 302
+    # response.status_code = 302
     return response
 
 
