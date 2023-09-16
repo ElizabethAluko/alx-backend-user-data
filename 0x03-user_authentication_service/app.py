@@ -70,9 +70,8 @@ def logout():
         AUTH.destroy_session(user.user_id)
 
         # Redirect to GET /
-        response = make_response(redirect('/'))
-        # response.status_code = 302
-        return response, 302
+        return  make_response(redirect('/')), 302
+
     except ValueError:
         abort(403)
 
