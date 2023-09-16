@@ -71,7 +71,7 @@ def logout():
     AUTH.destroy_session(user.user_id)
 
     # Redirect to GET /
-    response = make_response(redirect('/'))
+    response = make_response(redirect(url_for('index')))
     # response.status_code = 302
     return response
 
