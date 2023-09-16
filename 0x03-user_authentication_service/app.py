@@ -93,12 +93,10 @@ def profile():
 def get_reset_password_token():
     """To reset the user password"""
     email = request.form.get('email')
-    session_id = request.cookies.get('session_id')
-    if not email or not session_id:
+    if not email:
         abort(403)
 
     try:
-        user = AUTH.get_user_from_session_id(session_id)
         reset_password_token = AUTH.get_reset_password_token(email)
 
         response = make_response(jsonify({
