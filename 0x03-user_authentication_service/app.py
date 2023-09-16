@@ -89,18 +89,23 @@ def profile():
 @app.route('/reset_password', methods=['POST'])
 def get_reset_password_token():
     """To reset the user password"""
-    if request.method == 'POST':
-        email = request.form.get('email')
-        if not email:
-            abort(403)
-        reset_password_token = AUTH.get_reset_password_token(email)
+    email = request.form.get('email')
+    if not email:
+        abort(403)
+    session_id = request.cookies.get('session_id')
+    if not session_id:
+        abort(403)
+    user = AUTH.get_user_from_session_id(session_id)
+    if not user:
+        abort(403)
+    reset_password_token = AUTH.get_reset_password_token(email)
 
-        if not reset_password_token or reset_password_token is None:
-            abort(403)
-        else:
-            response = jsonify({"email": email,
-                                "reset_token": reset_password_token})
-            return response, 200
+    if not reset_password_token or reset_password_token is None:
+        abort(403)
+    else:
+        response = jsonify({"email": email,
+                            "reset_token": reset_password_token})
+        return response, 200
 
 
 @app.route('/reset_password', methods=['PUT'])
