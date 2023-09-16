@@ -71,7 +71,9 @@ def logout():
     AUTH.destroy_session(user.user_id)
 
     # Redirect to GET /
-    return redirect(url_for('/'))
+    response = make_response(redirect('/'))
+    response.status_code = 302
+    return response
 
 
 @app.route('/profile', methods=['GET'])
