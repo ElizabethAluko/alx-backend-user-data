@@ -114,10 +114,10 @@ def update_password():
     if request.method == 'PUT':
         email = request.form.get('email')
         reset_token = request.form.get('reset_token')
-        new_password = request.form.get('new_password')
+        new_password = request.form.get('password')
         if not reset_token or not email:
             abort(403)
-        AUTH.update_password(reset_token, password)
+        AUTH.update_password(reset_token, new_password)
         response = jsonify({"email": email,
                             "message": "Password updated"})
         return response, 200
