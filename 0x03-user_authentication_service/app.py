@@ -111,16 +111,16 @@ def get_reset_password_token():
 @app.route('/reset_password', methods=['PUT'])
 def update_password():
     """Update the user's password"""
-    if request.method == 'PUT':
-        email = request.form.get('email')
-        reset_token = request.form.get('reset_token')
-        new_password = request.form.get('password')
-        if not reset_token or not email:
-            abort(403)
-        AUTH.update_password(reset_token, new_password)
-        response = jsonify({"email": email,
-                            "message": "Password updated"})
-        return response, 200
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    new_password = request.form.get('password')
+
+    if not reset_token or not email:
+        abort(403)
+    AUTH.update_password(reset_token, new_password)
+    response = jsonify({"email": email,
+                        "message": "Password updated"})
+    return response, 200
 
 
 if __name__ == "__main__":
