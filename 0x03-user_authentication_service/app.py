@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Application Module"""
 
-from flask import Flask, jsonify, request, abort, url_for, redirect
+from flask import Flask, jsonify, request
+from flask import abort, url_for, make_response, redirect
 from auth import Auth
 
 AUTH = Auth()
@@ -83,7 +84,7 @@ def profile():
     if not user:
         abort(403)
 
-    return jsonify({"email": user.email}), 200
+    return make_response(jsonify({"email": user.email})), 200
 
 
 @app.route('/reset_password', methods=['POST'])
