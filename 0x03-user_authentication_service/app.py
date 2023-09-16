@@ -106,9 +106,11 @@ def get_reset_password_token():
     if not reset_password_token:
         abort(403)
     else:
-        response = make_response(jsonify({"email": user.email,
-                            "reset_token": reset_password_token}))
-        return response, 200
+        response = make_response(jsonify({
+            "email": user.email,
+            "reset_token": reset_password_token}))
+        response.status_code = 200
+        return response
 
 
 @app.route('/reset_password', methods=['PUT'])
