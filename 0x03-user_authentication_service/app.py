@@ -64,7 +64,7 @@ def logout():
 
     # Find the user with the session id.
     try:
-        user = AUTH.get_user_from_session_id(session_id)
+        # user = AUTH.get_user_from_session_id(session_id)
 
         # User is found, destoy the session_id
         AUTH.destroy_session(user.user_id)
