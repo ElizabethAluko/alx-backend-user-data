@@ -9,7 +9,7 @@ AUTH = Auth()
 app = Flask(__name__)
 
 
-@app.route('/' methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     """Index Page"""
     payload = {"message": "Bienvenue"}
